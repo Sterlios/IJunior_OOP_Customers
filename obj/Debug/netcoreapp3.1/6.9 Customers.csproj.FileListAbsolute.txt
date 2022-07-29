@@ -11,3 +11,4 @@ D:\Programming\Projects\IJunior\6 OOP\6.9 Customers\obj\Debug\netcoreapp3.1\6.9 
 D:\Programming\Projects\IJunior\6 OOP\6.9 Customers\obj\Debug\netcoreapp3.1\6.9 Customers.dll
 D:\Programming\Projects\IJunior\6 OOP\6.9 Customers\obj\Debug\netcoreapp3.1\6.9 Customers.pdb
 D:\Programming\Projects\IJunior\6 OOP\6.9 Customers\obj\Debug\netcoreapp3.1\6.9 Customers.genruntimeconfig.cache
+D:\Programming\Projects\IJunior\6 OOP\6.9 Customers\obj\Debug\netcoreapp3.1\6.9 Customers.csproj.AssemblyReference.cache
