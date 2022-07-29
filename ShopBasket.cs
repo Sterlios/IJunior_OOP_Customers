@@ -7,26 +7,45 @@ namespace Customers
     {
         private List<Product> _products;
         private Random _random;
-        private Shop _shop;
+        public int MaxProductscount { get; }
 
-        public ShopBasket(Shop shop)
+        public ShopBasket()
         {
             _random = new Random();
-            _shop = shop;
-
-            InitializeProducts();
+            _products = new List<Product>();
+            MaxProductscount = 20;
         }
 
-        public List<Product> GetProductsList()
+        public bool TryGetProductsInfo(out string productsInfo)
         {
-            List<Product> productsNames = new List<Product>();
+            productsInfo = "";
+
+            if(_products.Count > 0)
+            {
+                foreach (Product product in _products)
+                {
+                    productsInfo += product + "\n";
+                }
+
+                return true;
+            }
+            else
+            {
+                productsInfo = "Корзина пуста!";
+                return false;
+            }
+        }
+
+        public int GetTotalCost()
+        {
+            int totalCost = 0;
 
             foreach (Product product in _products)
             {
-                productsNames.Add(new Product(product));
+                totalCost += product.Price;
             }
 
-            return productsNames;
+            return totalCost;
         }
 
         public void DeleteRandomProduct()
@@ -38,18 +57,16 @@ namespace Customers
             _products.RemoveAt(productIndex);
         }
 
-        private void InitializeProducts()
+        public bool TryAddProduct(Product product)
         {
-            int maxProductCount = 20;
-            int productCount = _random.Next(1, maxProductCount);
-            int shopPoductCount = Enum.GetNames(typeof(ProductName)).Length;
-
-            _products = new List<Product>();
-
-            for(int i = 0; i < productCount; i++)
+            if(_products.Count < MaxProductscount)
             {
-                ProductName randomProductName = (ProductName)_random.Next(1, shopPoductCount);
-                _products.Add(_shop.GetProduct(randomProductName));
+                _products.Add(product);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

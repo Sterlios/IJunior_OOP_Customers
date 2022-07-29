@@ -5,8 +5,6 @@ namespace Customers
 {
     class Seller
     {
-        private Customer _currentCustomer;
-        private List<Product> _clientProducts;
         private Shop _shop;
 
         public Seller(Shop shop)
@@ -21,55 +19,31 @@ namespace Customers
             CustomersQueue customers = new CustomersQueue(_shop);
             Console.WriteLine();
 
-            while (customers.GetCustomer(out _currentCustomer))
+            while (customers.TryGetCustomer(out Customer currentCustomer))
             {
-                Console.WriteLine("Текущий клиент: " + _currentCustomer);
+                Console.WriteLine("Текущий клиент: " + currentCustomer);
 
-                MakeDeal();
+                MakeDeal(currentCustomer);
 
-                Console.WriteLine("Клиент совершил покупку: " + _currentCustomer);
+                Console.WriteLine("Клиент совершил покупку: " + currentCustomer);
                 Console.ReadLine();
             }
 
             Console.WriteLine("Продавец закончил работать");
         }
 
-        private void GetCustomerProducts()
+        private void MakeDeal(Customer currentCustomer)
         {
-            _clientProducts = _currentCustomer.GetProductsList();
+            currentCustomer.ShowProducts();
 
-            Console.WriteLine("Корзина клинета: ");
-            foreach (Product product in _clientProducts)
-            {
-                Console.WriteLine(product);
-            }
-        }
-
-        private void MakeDeal()
-        {
-            GetCustomerProducts();
-
-            int totalCost = GetTotalCost();
-
-            if (_currentCustomer.TryBuy(totalCost) == false)
-            {
-                MakeDeal();
-            }
-        }
-
-        private int GetTotalCost()
-        {
-            int totalCost = 0;
-
-            foreach (Product product in _clientProducts)
-            {
-                totalCost += product.Price;
-            }
-
+            int totalCost = currentCustomer.GetTotalCost();
             Console.WriteLine("Итоговая стоимость товаров: " + totalCost);
             Console.ReadLine();
 
-            return totalCost;
+            if (currentCustomer.TryBuy(totalCost) == false)
+            {
+                MakeDeal(currentCustomer);
+            }
         }
     }
 }

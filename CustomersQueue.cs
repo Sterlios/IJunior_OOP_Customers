@@ -30,7 +30,7 @@ namespace Customers
             return customers;
         }
 
-        public bool GetCustomer(out Customer customer)
+        public bool TryGetCustomer(out Customer customer)
         {
             return _customers.TryDequeue(out customer);
         }
